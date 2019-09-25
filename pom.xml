@@ -1,0 +1,149 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>dsp.learn.jpa</groupId>
+	<artifactId>cursojpa</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>Projeto JPA Hibernate com Maven</name>
+	<url>http://github.com/dausther</url>
+
+	<organization>
+		<name>Perini Software House</name>
+	</organization>
+	<description>Construindo aplicação com Maven, JPA e Git</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+<!-- Os profiles abaixo podem ser utilizados para rodar em Desenv ou em Producao -->
+<!-- Exemplo de utilização em projeto na página http://slackspace.de/articles/jpa-persistence-modular-maven-application/ -->
+<!-- 	<profiles> -->
+<!-- 		<profile> -->
+<!-- 			<id>profile-development</id> -->
+<!-- 			<properties> -->
+<!-- 				<environment>dev</environment> -->
+<!-- 				<db.username>myDevUser</db.username> -->
+<!-- 				<db.password>secretDevPasswd</db.password> -->
+<!-- 				<db.url>jdbc:mysql://localhost/myDb</db.url> -->
+<!-- 				<db.dialect>org.hibernate.dialect.MySQL5Dialect</db.dialect> -->
+<!-- 				<db.driver>com.mysql.jdbc.Driver</db.driver> -->
+<!-- 			</properties> -->
+<!-- 			<activation> -->
+<!-- 				<activeByDefault>true</activeByDefault> -->
+<!-- 				<property> -->
+<!-- 					<name>environment</name> -->
+<!-- 					<value>dev</value> -->
+<!-- 				</property> -->
+<!-- 			</activation> -->
+<!-- 		</profile> -->
+<!-- 		<profile> -->
+<!-- 			<id>profile-production</id> -->
+<!-- 			<properties> -->
+<!-- 				<environment>prod</environment> -->
+<!-- 				<db.username>myProdUser</db.username> -->
+<!-- 				<db.password>secretProdPasswd</db.password> -->
+<!-- 				<db.url>jdbc:mysql://production-database/myDb</db.url> -->
+<!-- 				<db.dialect>org.hibernate.dialect.MySQL5Dialect</db.dialect> -->
+<!-- 				<db.driver>com.mysql.jdbc.Driver</db.driver> -->
+<!-- 			</properties> -->
+<!-- 			<activation> -->
+<!-- 				<property> -->
+<!-- 					<name>environment</name> -->
+<!-- 					<value>prod</value> -->
+<!-- 				</property> -->
+<!-- 			</activation> -->
+<!-- 		</profile> -->
+<!-- 	</profiles> -->
+
+	<build>
+<!-- 		<finalName>${project.name}</finalName> -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<classpathLayoutType>repository</classpathLayoutType>
+							<mainClass>dsp.learn.jpa.IniciaApp</mainClass>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+						<manifestSections>
+							<manifestSection>
+								<name>DESCRIÇÃO</name>
+								<manifestEntries>
+									<id>Estou testando a criação do Manifest via Maven</id>
+								</manifestEntries>
+							</manifestSection>
+						</manifestSections>
+						<manifestEntries>
+							<mode>development</mode>
+							<url>${project.url}</url>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<finalName>perini-${artifactId}-${version}</finalName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-agroal</artifactId>
+			<version>5.4.5.Final</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>1.1</version>
+		</dependency>
+	</dependencies>
+</project>
